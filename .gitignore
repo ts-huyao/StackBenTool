@@ -12,5 +12,4 @@ target/
 auditlog/
 .idea/
 .DS_Store
-pom.xml
 tmp.*
