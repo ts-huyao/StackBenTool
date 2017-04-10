@@ -4,6 +4,7 @@ public class BenResultDto {
 
     private String benType;
     private long hitCount;
+    private long errorCount;
     private long periodInMili;
 
     public String getBenType() {
@@ -36,16 +37,26 @@ public class BenResultDto {
         sb.append("Benchmark Result:").append(System.lineSeparator());
         sb.append(this.benType).append(":").append(System.lineSeparator());
         sb.append(this.getHitCount()).append(" tests are completed in ").append(this.getPeriodInMili()).append(" " +
-                "miliseconds.");
+                "miliseconds.").append(System.lineSeparator());
         double tps = ((double)this.getHitCount()*1000)/(double) this.getPeriodInMili();
-        sb.append("TPS:").append(tps);
+        sb.append("TPS:").append(tps).append(System.lineSeparator());
+        sb.append("Error:").append(this.getErrorCount());
         return sb.toString();
+    }
+
+    public long getErrorCount() {
+        return errorCount;
+    }
+
+    public void setErrorCount(long errorCount) {
+        this.errorCount = errorCount;
     }
 
 
     public static final class BenResultDtoBuilder {
         private String benType;
         private long hitCount;
+        private long errorCount;
         private long periodInMili;
 
         private BenResultDtoBuilder() {
@@ -65,6 +76,11 @@ public class BenResultDto {
             return this;
         }
 
+        public BenResultDtoBuilder withErrorCount(long errorCount) {
+            this.errorCount = errorCount;
+            return this;
+        }
+
         public BenResultDtoBuilder withPeriodInMili(long periodInMili) {
             this.periodInMili = periodInMili;
             return this;
@@ -74,6 +90,7 @@ public class BenResultDto {
             BenResultDto benResultDto = new BenResultDto();
             benResultDto.setBenType(benType);
             benResultDto.setHitCount(hitCount);
+            benResultDto.setErrorCount(errorCount);
             benResultDto.setPeriodInMili(periodInMili);
             return benResultDto;
         }

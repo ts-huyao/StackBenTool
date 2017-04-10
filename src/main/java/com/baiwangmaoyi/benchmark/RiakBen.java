@@ -140,6 +140,7 @@ public class RiakBen {
         final int benTarget = optionDto.getWriteCount();
 
         final AtomicLong opCounter = new AtomicLong(0L);
+        final AtomicLong errorCounter = new AtomicLong(0L);
         Random random = new Random();
         final byte[] data = new byte[optionDto.getFileSize() * 1024];
         random.nextBytes(data);
@@ -174,7 +175,12 @@ public class RiakBen {
                     IntStream.range(0, optionDto.getThreadCount()).parallel()
                             .forEach(p -> {
                                 while (opCounter.incrementAndGet() <= benTarget) {
-                                    dao.create(UUID.randomUUID().toString(), data, "image/jpeg");
+                                    try {
+                                        dao.create(UUID.randomUUID().toString(), data, "image/jpeg");
+                                    } catch (Throwable throwable){
+                                        errorCounter.incrementAndGet();
+                                        logger.error("Riak create error occurs.", throwable);
+                                    }
                                 }
                             })
             ).get();

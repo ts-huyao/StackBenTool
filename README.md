@@ -10,7 +10,7 @@ java -jar benchmark-version.jar
  -minc,--maxconn <arg>    Riak max connection  
  -rh,--riakhost <arg>     Riak hosts, exp: 127.0.0.1:8087 or  
                           192.168.1.10:8087,192.168.1.11:8087  
- -th,--thread <arg>       Concurrent threads  
+ -th,--thread <arg>       Concurrent thr eads  
  -tw,--write <arg>        Total writes  
 
 
